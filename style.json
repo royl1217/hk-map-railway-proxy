@@ -1,0 +1,21 @@
+{
+  "version": 8,
+  "name": "HK Basemap",
+  "sources": {
+    "hkmap": {
+      "type": "vector",
+      "tiles": [
+        "https://hk-map-proxy.fly.dev/hkmap/gs/api/v1.0.0/vt/basemap/HK80/tile/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 0,
+      "maxzoom": 19
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#ffffff" }
+    }
+  ]
+}
