@@ -4,20 +4,19 @@ import fetch from "node-fetch";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Proxy HK GeoData vector tiles
 app.get("/hkmap/*", async (req, res) => {
   try {
-    const targetUrl =
+    const target =
       "https://mapapi.geodata.gov.hk" + req.originalUrl.replace("/hkmap", "");
 
-    const response = await fetch(targetUrl);
+    const response = await fetch(target);
 
     if (!response.ok) {
       return res.status(response.status).send("Tile fetch failed");
     }
 
     res.set("Access-Control-Allow-Origin", "*");
-    res.set("Content-Type", "application/x-protobuf");
+    res.set("Content-Type", response.headers.get("Content-Type"));
 
     const buffer = await response.arrayBuffer();
     res.send(Buffer.from(buffer));
@@ -27,9 +26,8 @@ app.get("/hkmap/*", async (req, res) => {
   }
 });
 
-// Health check
 app.get("/", (req, res) => {
-  res.send("Railway HK GeoData Proxy is running");
+  res.send("Fly.io HK GeoData Proxy is running");
 });
 
 app.listen(PORT, () => {
